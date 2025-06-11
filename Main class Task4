@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+
+public class StudentMarksProcessor {
+    public static void main(String[] args) {
+        String inputFile = "input.txt";
+        String outputFile = "output.txt";
+
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+        ) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\s+");
+
+                String name = parts[0];
+                int total = 0;
+                for (int i = 1; i < parts.length; i++) {
+                    total += Integer.parseInt(parts[i]);
+                }
+
+                int subjectCount = parts.length - 1;
+                double average = (double) total / subjectCount;
+
+                String result = String.format("%s Total: %d Average: %.2f", name, total, average);
+                writer.write(result);
+                writer.newLine();
+            }
+
+            System.out.println("Processing completed. Results written to " + outputFile);
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid mark found in file: " + e.getMessage());
+        }
+    }
+}
