@@ -1,0 +1,145 @@
+import java.io.*;
+import java.util.*;
+
+public class EmployeeRecordSystem {
+
+    private static final String FILE_NAME = "employees.txt";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n--- Employee Record System ---");
+            System.out.println("1. Add Employee");
+            System.out.println("2. View Employees");
+            System.out.println("3. Update Employee");
+            System.out.println("4. Delete Employee");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
+            choice = Integer.parseInt(scanner.nextLine());
+
+            switch (choice) {
+                case 1 -> addEmployee(scanner);
+                case 2 -> viewEmployees();
+                case 3 -> updateEmployee(scanner);
+                case 4 -> deleteEmployee(scanner);
+                case 5 -> System.out.println("Exiting...");
+                default -> System.out.println("Invalid choice. Try again.");
+            }
+        } while (choice != 5);
+
+        scanner.close();
+    }
+
+    private static void addEmployee(Scanner scanner) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            System.out.print("Enter ID: ");
+            String id = scanner.nextLine();
+            System.out.print("Enter Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter Department: ");
+            String dept = scanner.nextLine();
+            System.out.print("Enter Salary: ");
+            String salary = scanner.nextLine();
+
+            writer.write(id + "," + name + "," + dept + "," + salary);
+            writer.newLine();
+
+            System.out.println("Employee added successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+        }
+    }
+
+    private static void viewEmployees() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            System.out.println("\n--- Employee List ---");
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                System.out.printf("ID: %s, Name: %s, Department: %s, Salary: %s\n", 
+                                  parts[0], parts[1], parts[2], parts[3]);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file.");
+        }
+    }
+
+    private static void updateEmployee(Scanner scanner) {
+        System.out.print("Enter ID of employee to update: ");
+        String targetId = scanner.nextLine();
+
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals(targetId)) {
+                    found = true;
+                    System.out.print("Enter new Name: ");
+                    parts[1] = scanner.nextLine();
+                    System.out.print("Enter new Department: ");
+                    parts[2] = scanner.nextLine();
+                    System.out.print("Enter new Salary: ");
+                    parts[3] = scanner.nextLine();
+                    line = String.join(",", parts);
+                }
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file.");
+        }
+
+        if (found) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+                for (String l : lines) {
+                    writer.write(l);
+                    writer.newLine();
+                }
+                System.out.println("Employee updated successfully.");
+            } catch (IOException e) {
+                System.out.println("Error writing to file.");
+            }
+        } else {
+            System.out.println("Employee with ID " + targetId + " not found.");
+        }
+    }
+
+    private static void deleteEmployee(Scanner scanner) {
+        System.out.print("Enter ID of employee to delete: ");
+        String targetId = scanner.nextLine();
+
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith(targetId + ",")) {
+                    lines.add(line);
+                } else {
+                    found = true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file.");
+        }
+
+        if (found) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+                for (String l : lines) {
+                    writer.write(l);
+                    writer.newLine();
+                }
+                System.out.println("Employee deleted successfully.");
+            } catch (IOException e) {
+                System.out.println("Error writing to file.");
+            }
+        } else {
+            System.out.println("Employee with ID " + targetId + " not found.");
+        }
+    }
+}
