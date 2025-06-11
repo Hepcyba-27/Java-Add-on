@@ -1,0 +1,19 @@
+package task;
+import java.io.FileWriter;
+import java.io.IOException;
+public class Task3 {
+	public class WriteToFile {
+		public static void main(String[] args) {
+			try {
+				FileWriter myWriter= new FileWriter("Task1.txt");
+				myWriter.write("Downloading software is strictly prohibited");
+				myWriter.close();
+				System.out.println("Successfully wrote the file!");
+			} catch(IOException e) {
+				System.out.println("Error occurred!");
+				e.printStackTrace();
+				}
+			}
+	}
+
+}
