@@ -24,7 +24,7 @@ private int Marks;
 public class Student {
 
 public static void main(String[] args) {
-StudentManagement in= new StudentManagement("Kalpana",92 + 94 + 100);
+StudentManagement in= new StudentManagement("Hepcyba",91 + 92 + 99);
 System.out.println("Student Name:"+in.getStudent());
 System.out.println("Student Mark:"+ in.getMarks());
 in.setResult(96 );
