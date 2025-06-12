@@ -1,0 +1,78 @@
+import java.util.*;
+
+class Student {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+public class Enrollment {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+        HashMap<Integer, ArrayList<String>> courses = new HashMap<>();
+
+        while (true) {
+            System.out.println("\n1. Add Student  2. Remove Student  3. Display All  4. Exit");
+            int choice = sc.nextInt();
+            sc.nextLine(); // clear buffer
+
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter Student ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Student Name: ");
+                    String name = sc.nextLine();
+
+                    students.add(new Student(id, name));
+
+                    System.out.print("Number of Courses: ");
+                    int count = sc.nextInt();
+                    sc.nextLine();
+
+                    ArrayList<String> courseList = new ArrayList<>();
+                    for (int i = 0; i < count; i++) {
+                        System.out.print("Course " + (i + 1) + ": ");
+                        courseList.add(sc.nextLine());
+                    }
+                    courses.put(id, courseList);
+                }
+                case 2 -> {
+                    System.out.print("Enter Student ID to remove: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    Iterator<Student> it = students.iterator();
+                    boolean found = false;
+
+                    while (it.hasNext()) {
+                        Student s = it.next();
+                        if (s.id == id) {
+                            it.remove();
+                            courses.remove(id);
+                            found = true;
+                            break;
+                        }
+                    }
+                    System.out.println(found ? "Student removed." : "Student not found.");
+                }
+                case 3 -> {
+                    System.out.println("--- Student List ---");
+                    for (Student s : students) {
+                        System.out.println("ID: " + s.id + ", Name: " + s.name);
+                        System.out.println("Courses: " + courses.getOrDefault(s.id, new ArrayList<>()));
+                    }
+                }
+                case 4 -> {
+                    System.out.println("Goodbye!");
+                    return;
+                }
+                default -> System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
