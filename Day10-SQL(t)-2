@@ -1,0 +1,21 @@
+create table Employee(
+  EmployeeId int,
+  name varchar (15),
+  dept varchar (25),
+  salary int
+
+  
+);
+
+INSERT INTO Employee(EmployeeId,name,dept,salary) values
+ (1, 'Jerlin', 'Sales',110000),
+ (2, 'Shiny', 'Accounting',200000),
+ (3, 'Hepcyba', 'sales',100000),
+ (4, 'Mercyba', 'Auditing',300000),
+ (5, 'Jenifer', 'Freelancher',75000)
+ 
+SELECT * 
+FROM Employee;
+
+SELECT avg(salary)
+from Employee;
