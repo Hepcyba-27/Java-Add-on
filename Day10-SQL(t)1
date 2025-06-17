@@ -1,0 +1,21 @@
+create table Student (
+  StudentId int,
+  name varchar (15),
+  course varchar (25)
+
+  
+);
+
+INSERT INTO Student(StudentId,name,course) values
+ (1, 'Jerlin', 'Software development'),
+ (2, 'Shiny', 'Full stack'),
+ (3, 'Hepcyba', 'Ui&Ux'),
+ (4, 'Mercyba', 'Frontend'),
+ (5, 'Jenifer', 'Full stack')
+ 
+SELECT * 
+FROM Student;
+
+SELECT count(*),StudentId,course
+from Student
+group by StudentId,course
