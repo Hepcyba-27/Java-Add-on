@@ -1,0 +1,23 @@
+create table product(
+ productId int,
+ productname varchar (20),
+ price int
+
+  
+);
+
+INSERT INTO product(productId,productname,price) values
+ (1, 'Horlicks',50),
+ (2, 'Chocolate',200),
+ (3, 'Soap',100),
+ (4, 'Shampoo',300),
+ (5, 'Conditioner',150)
+ 
+SELECT * 
+FROM product;
+
+SELECT max(price)
+from product;
+
+SELECT min(price)
+from product;
