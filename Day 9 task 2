@@ -30,3 +30,8 @@ INSERT INTO Mark (MarkID, StudentID, Subject, Marks) VALUES
 (103, 2, 'Maths', 79),
 (104, 3, 'English', 85),
 (105, 4, 'Science', 90);
+
+SELECT * FROM courses ORDER BY fees ASC;
+
+sorted_courses = sorted(courses, key=lambda x: x['fees'])
+
