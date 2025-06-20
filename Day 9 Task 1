@@ -1,0 +1,36 @@
+
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Class VARCHAR(20),
+    Email VARCHAR(100)
+);
+
+CREATE TABLE Mark (
+    MarkID INT PRIMARY KEY,
+    StudentID INT,
+    Subject VARCHAR(50),
+    Marks INT,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+
+INSERT INTO Student (StudentID, FirstName, LastName, Class, Email) VALUES
+(1, 'Priya', 'Reddy', '10A', 'priya.reddy@example.com'),
+(2, 'Arjun', 'Mehta', '10A', 'arjun.mehta@example.com'),
+(3, 'Kavya', 'Iyer', '10B', 'kavya.iyer@example.com'),
+(4, 'Rohit', 'Singh', '10B', 'rohit.singh@example.com'),
+(5, 'Nisha', 'Menon', '10C', 'nisha.menon@example.com');
+
+INSERT INTO Mark (MarkID, StudentID, Subject, Marks) VALUES
+(101, 1, 'Maths', 88),
+(102, 1, 'Science', 92),
+(103, 2, 'Maths', 79),
+(104, 3, 'English', 85),
+(105, 4, 'Science', 90);
+
+SELECT * FROM students WHERE marks > 80;
+
+top_students = [student for student in students if student["marks"] > 80]
+
+
